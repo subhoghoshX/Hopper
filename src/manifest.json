@@ -20,7 +20,7 @@
   "declarative_net_request": {
     "rule_resources": [
       {
-        "id": "ruleset",
+        "id": "redirect_ruleset",
         "enabled": true,
         "path": "redirect-rules.json"
       }

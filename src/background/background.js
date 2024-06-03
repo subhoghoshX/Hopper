@@ -51,3 +51,29 @@ browser.webNavigation.onBeforeNavigate.addListener(
   },
   { url: [{ hostContains: "yewtu.be" }] },
 );
+
+browser.runtime.onMessage.addListener(async (message) => {
+  if (message.type === "get_toggle_info") {
+    const rulesets = await browser.declarativeNetRequest.getEnabledRulesets();
+    if (rulesets.length === 0) {
+      browser.runtime.sendMessage({
+        toggleStatus: false,
+      });
+    } else {
+      browser.runtime.sendMessage({
+        toggleStatus: true,
+      });
+    }
+  } else if (message.type === "set_toggle_info") {
+    const { toggleStatus } = message;
+    if (toggleStatus) {
+      browser.declarativeNetRequest.updateEnabledRulesets({
+        enableRulesetIds: ["redirect_ruleset"],
+      });
+    } else {
+      browser.declarativeNetRequest.updateEnabledRulesets({
+        disableRulesetIds: ["redirect_ruleset"],
+      });
+    }
+  }
+});
