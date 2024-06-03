@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Hopper",
+  "description": "Redirects youtube.com urls to yewtu.be",
+  "version": "0.0.1",
+  "action": {
+    "default_popup": "popup/index.html"
+  },
+  "background": {
+    "service_worker": "background/background.js"
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "cookies",
+    "webNavigation"
+  ],
+  "incognito": "split",
+  "host_permissions": ["*://*.youtube.com/*", "*://*.yewtu.be/*"],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "redirect-rules.json"
+      }
+    ]
+  }
+}
